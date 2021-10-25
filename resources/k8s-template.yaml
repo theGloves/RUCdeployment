@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {node_name}
+  labels:
+    name: {node_name}
+    app: chainBFT
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chainBFT
+  template:
+    metadata:
+      labels:
+        app: chainBFT
+        name: {node_name}
+    spec:
+      containers:
+      - name: {node_name}
+        image: {image}
+        imagePullPolicy: Always
+        command:
+          - chain_bft
+        args:
+          - start
+          - node
+          - --p2p.persistent_peers={peers}
+        volumeMounts:
+          - mountPath: /chain_bft/.chain_bft/config
+            name: vol{id}
+            subPath: test/{node_name}/config          
+          - mountPath: /chain_bft/.chain_bft/data
+            name: vol{id}
+            subPath: test/{node_name}/data
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - name: vol{id}
+          persistentVolumeClaim:
+            claimName: cbft
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  {node_name}
+  labels:
+    name: {node_name}
+    app: chainBFT
+spec:
+  selector:
+    name: {node_name}
+  type:  ClusterIP
+  clusterIP: {ip_addr}
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
