@@ -15,5 +15,6 @@ for (( i = 1; i <= $NODE_CNT; i++ )); do
   docker run -v $volume $IMAGE gen-genesis-block --seed $SEED --thres $THRESHODL --cluster-count $NODE_CNT
   docker run -v $volume $IMAGE gen-node-key
   docker run -v $volume $IMAGE gen-validator --idx $i --seed $SEED --thres $THRESHODL
-  chmod -R 766 $OUTPUTDIR/cbft${i}
+  chmod -R 777 $OUTPUTDIR/cbft${i}
+  chmod 777 $OUTPUTDIR/cbft${i}/*
 done

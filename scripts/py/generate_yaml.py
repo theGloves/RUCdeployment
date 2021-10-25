@@ -10,7 +10,7 @@ filename = "test/deployment-k8s.yaml"  # 输出文件名
 
 def getPeers(peers, prev):
     if prev < 0:
-        return "‘’"
+        return ""
     return peers[prev]
 
 
