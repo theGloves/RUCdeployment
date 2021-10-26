@@ -6,9 +6,9 @@ install:
 
 quick:
 	make clean
-	./bin/kubectl create -n chainbft -f test/deployment-k8s.yaml
+	./bin/kubectl create -n tendermint -f test/deployment-k8s.yaml
 
 clean:
-	./bin/kubectl delete -n chainbft services,deployments -l app=chainBFT
+	./bin/kubectl delete -n tendermint services,deployments -l app=tendermint
 
 .PHONY: build install quick clean	

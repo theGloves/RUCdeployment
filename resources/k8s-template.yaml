@@ -5,16 +5,16 @@ metadata:
   name: {node_name}
   labels:
     name: {node_name}
-    app: chainBFT
+    app: tendermint
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chainBFT
+      app: tendermint
   template:
     metadata:
       labels:
-        app: chainBFT
+        app: tendermint
         name: {node_name}
     spec:
       containers:
@@ -22,29 +22,37 @@ spec:
         image: {image}
         imagePullPolicy: Always
         command:
-          - chain_bft
+          - /tendermint/tendermint
         args:
           - start
-          - node
+          - --proxy_app=persistent_kvstore
           - --p2p.persistent_peers={peers}
+        #   - node
+        env:
+          - name: ID
+            value: "{id}"
+          - name: LOG
+            value: "{log}"
+          - name: BINARY
+            value: "/tendermint/tendermint"
         volumeMounts:
-          - mountPath: /chain_bft/.chain_bft/config
+          - mountPath: /root/.tendermint/config
             name: vol{id}
-            subPath: test/{node_name}/config          
-          - mountPath: /chain_bft/.chain_bft/data
+            subPath: tendermint/{node_name}/config          
+          - mountPath: /root/.tendermint/data
             name: vol{id}
-            subPath: test/{node_name}/data
-        #resources:
-        #   requests:
-        #     cpu: "1"
-        #     memory: 2Gi
-          #limits:
-          #  cpu: "1"
-          #  memory: 2Gi
+            subPath: tendermint/{node_name}/data
+        resources:
+          requests:
+            cpu: "1"
+            memory: 2Gi
+          limits:
+           cpu: "1"
+           memory: 2Gi
       volumes:
         - name: vol{id}
           persistentVolumeClaim:
-            claimName: cbft
+            claimName: tendermint
 ---
 kind: Service
 apiVersion: v1
@@ -52,7 +60,7 @@ metadata:
   name:  {node_name}
   labels:
     name: {node_name}
-    app: chainBFT
+    app: tendermint
 spec:
   selector:
     name: {node_name}

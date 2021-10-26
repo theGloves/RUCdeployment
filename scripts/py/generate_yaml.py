@@ -23,11 +23,12 @@ def genYaml(image, node_cnt, peers):
         for i in range(node_cnt):
             peers_str = getPeers(peers, i - 1)
             parameters = {
-                "id": i+1,
-                "node_name": "cbft{}".format(i + 1),
+                "id": i,
+                "node_name": "node{}".format(i),
                 "image": image,
+                "ip_addr": "10.43.100.{}".format(100 + i),
+                "log": "tendermint.log",
                 "peers": peers_str,
-                "ip_addr": "10.43.10.{}".format(100 + i),
             }
 
             output.write(template.format(**parameters))
