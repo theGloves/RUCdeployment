@@ -1,6 +1,6 @@
 # !/usr/bin/env sh
 set -e
-pods=$(kubectl get pods -n tendermint -o name | grep node0)
+pods=$(kubectl get pods -n tendermint -o name | grep node1)
 
 gres=""
 
