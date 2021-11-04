@@ -34,13 +34,13 @@ spec:
           - mountPath: /chain_bft/.chain_bft/data
             name: vol{id}
             subPath: test/{node_name}/data
-        #resources:
+        # resources:
         #   requests:
         #     cpu: "1"
         #     memory: 2Gi
-          #limits:
-          #  cpu: "1"
-          #  memory: 2Gi
+        #   limits:
+        #    cpu: "1"
+        #    memory: 2Gi
       volumes:
         - name: vol{id}
           persistentVolumeClaim:
