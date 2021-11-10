@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+set -ex
+
+USR_COMMAND=$1
+USER=centos
+HOSTFILE=/opt/hosts
+OPT="-o StrictHostKeyChecking=no -P"
+
+cat $HOSTFILE | while read HOST
+do
+    ssh ${OPT} -i ~/.ssh/ruc_500_new $USER@$HOST "${USR_COMMAND}"&
+done

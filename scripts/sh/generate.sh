@@ -25,6 +25,4 @@ done
 python scripts/py/generate_yaml.py $IMAGE $NODE_CNT $PEERS
 
 # deployment
-ssh -i ~/.ssh/ruc_500_new centos@10.77.70.135 "sudo rm -rf /home/centos/share/tendermint; mkdir -p /home/centos/share/tendermint"
-scp -r ./test/* centos@10.77.70.135:/home/centos/share/tendermint
-ssh -i ~/.ssh/ruc_500_new centos@10.77.70.135 "sudo chmod 777 /home/centos/share/tendermint/node*/config/*"
+bash scripts/sh/transport.sh

@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+set -ex
+
+USER=centos
+HOSTFILE=/opt/hosts
+OPT="-rp -o StrictHostKeyChecking=no"
+FILES=$1
+TARGET=$2
+
+cat $HOSTFILE | while read HOST
+do
+    scp $OPT -i ~/.ssh/ruc_500_new $FILES $USER@$HOST:$TARGET
+done
