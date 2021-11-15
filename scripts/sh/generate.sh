@@ -18,7 +18,7 @@ bash ./scripts/sh/gen_config.sh $NODE_CNT
 PEERS=""
 for (( i = 1; i <= $NODE_CNT; i++ )); do
   volume="--home ./test/node"$(($i-1))
-  NODEID=`./bin/tendermint show-node-id $volume`
+  NODEID=`./bin/tendermint_v03411 show-node-id $volume`
   PEERS=$PEERS"${NODEID}@10.43.100."$((${i}+99))":26656,"
 done
 
