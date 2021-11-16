@@ -44,11 +44,11 @@ spec:
             subPath: tendermint/{node_name}/data
         resources:
           requests:
-            cpu: "1"
-            memory: 2Gi
+            cpu: "2"
+            memory: 4Gi
           limits:
-           cpu: "1"
-           memory: 2Gi
+           cpu: "2"
+           memory: 4Gi
       volumes:
         - name: vol{id}
           persistentVolumeClaim:

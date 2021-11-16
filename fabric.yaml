@@ -1,0 +1,398 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fabric
+  template:
+    metadata:
+      labels:
+        app: fabric
+        name: fabric
+    spec:
+      containers:
+      - name: fabric
+        image: 10.77.70.82:4433/hyperledger/fabric-peer:x86_64-0.6.0-preview
+        imagePullPolicy: Always
+        command:
+          - /opt/gopath/bin/peer
+        args:
+          - node
+          - start
+        env:
+          - name: CORE_PEER_ADDRESSAUTODETECT
+            value: "true"
+          - name: CORE_PEER_NETWORKID
+            value: "dev"
+          - name: CORE_LOGGING_LEVEL
+            value: "debug"
+          - name: CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN
+            value: "pbft"
+          - name: CORE_PBFT_GENERAL_MODE
+            value: "batch"
+          - name: CORE_PBFT_GENERAL_N
+            value: "4"
+          - name: CORE_PBFT_GENERAL_BATCHSIZE
+            value: "2"
+          - name: CORE_PBFT_GENERAL_TIMEOUT_REQUEST
+            value: "2s"
+          - name: CORE_PEER_ID
+            value: "vp0"
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: fabric-data
+      volumes:
+        - name: fabric-data
+          hostPath:
+            path: /var/run/docker.sock
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  fabric
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  selector:
+    name: fabric
+  type:  ClusterIP
+  clusterIP: 10.43.200.101
+  ports:
+  - name:  rest
+    port:  7050
+    targetPort:  7050
+  - name:  grpc
+    port:  7051
+    targetPort:  7051
+  - name:  peer-cli
+    port:  7052
+    targetPort:  7052
+  - name:  peer-event
+    port:  7053
+    targetPort:  7053
+  - name: ecap
+    port:  7054
+    targetPort:  7054
+  - name:  ecaa
+    port:  7055
+    targetPort:  7055
+  - name:  tcap
+    port:  7056
+    targetPort:  7056
+  - name:  tcaa
+    port:  7057
+    targetPort:  7057
+  - name:  tls-cap
+    port:  7058
+    targetPort:  7058
+  - name:  tls-caa
+    port:  7059
+    targetPort:  7059
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric2
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fabric
+  template:
+    metadata:
+      labels:
+        app: fabric
+        name: fabric
+    spec:
+      containers:
+      - name: fabric
+        image: 10.77.70.82:4433/hyperledger/fabric-peer:x86_64-0.6.0-preview
+        imagePullPolicy: Always
+        command:
+          - /opt/gopath/bin/peer 
+        args:
+          - node
+          - start
+        env:
+          - name: CORE_PEER_ADDRESSAUTODETECT
+            value: "true"
+          - name: CORE_PEER_NETWORKID
+            value: "dev"
+          - name: CORE_LOGGING_LEVEL
+            value: "debug"
+          - name: CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN
+            value: "pbft"
+          - name: CORE_PBFT_GENERAL_MODE
+            value: "batch"
+          - name: CORE_PBFT_GENERAL_N
+            value: "4"
+          - name: CORE_PBFT_GENERAL_BATCHSIZE
+            value: "2"
+          - name: CORE_PBFT_GENERAL_TIMEOUT_REQUEST
+            value: "2s"
+          - name: CORE_PEER_ID
+            value: "vp1"
+          - name: CORE_PEER_DISCOVERY_ROOTNODE
+            value: "10.43.200.101:7051"
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: fabric-data
+      volumes:
+        - name: fabric-data
+          hostPath:
+            path: /var/run/docker.sock
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  fabric2
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  selector:
+    name: fabric
+  type:  ClusterIP
+  clusterIP: 10.43.200.102
+  ports:
+  - name:  rest
+    port:  7050
+    targetPort:  7050
+  - name:  grpc
+    port:  7051
+    targetPort:  7051
+  - name:  peer-cli
+    port:  7052
+    targetPort:  7052
+  - name:  peer-event
+    port:  7053
+    targetPort:  7053
+  - name: ecap
+    port:  7054
+    targetPort:  7054
+  - name:  ecaa
+    port:  7055
+    targetPort:  7055
+  - name:  tcap
+    port:  7056
+    targetPort:  7056
+  - name:  tcaa
+    port:  7057
+    targetPort:  7057
+  - name:  tls-cap
+    port:  7058
+    targetPort:  7058
+  - name:  tls-caa
+    port:  7059
+    targetPort:  7059
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric3
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fabric
+  template:
+    metadata:
+      labels:
+        app: fabric
+        name: fabric
+    spec:
+      containers:
+      - name: fabric
+        image: 10.77.70.82:4433/hyperledger/fabric-peer:x86_64-0.6.0-preview
+        imagePullPolicy: Always
+        command:
+          - /opt/gopath/bin/peer
+        args:
+          - node
+          - start
+        env:
+          - name: CORE_PEER_ADDRESSAUTODETECT
+            value: "true"
+          - name: CORE_PEER_NETWORKID
+            value: "dev"
+          - name: CORE_LOGGING_LEVEL
+            value: "debug"
+          - name: CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN
+            value: "pbft"
+          - name: CORE_PBFT_GENERAL_MODE
+            value: "batch"
+          - name: CORE_PBFT_GENERAL_N
+            value: "4"
+          - name: CORE_PBFT_GENERAL_BATCHSIZE
+            value: "2"
+          - name: CORE_PBFT_GENERAL_TIMEOUT_REQUEST
+            value: "2s"
+          - name: CORE_PEER_ID
+            value: "vp3"
+          - name: CORE_PEER_DISCOVERY_ROOTNODE
+            value: "10.43.200.101:7051"
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: fabric-data
+      volumes:
+        - name: fabric-data
+          hostPath:
+            path: /var/run/docker.sock
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  fabric3
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  selector:
+    name: fabric
+  type:  ClusterIP
+  clusterIP: 10.43.200.103
+  ports:
+  - name:  rest
+    port:  7050
+    targetPort:  7050
+  - name:  grpc
+    port:  7051
+    targetPort:  7051
+  - name:  peer-cli
+    port:  7052
+    targetPort:  7052
+  - name:  peer-event
+    port:  7053
+    targetPort:  7053
+  - name: ecap
+    port:  7054
+    targetPort:  7054
+  - name:  ecaa
+    port:  7055
+    targetPort:  7055
+  - name:  tcap
+    port:  7056
+    targetPort:  7056
+  - name:  tcaa
+    port:  7057
+    targetPort:  7057
+  - name:  tls-cap
+    port:  7058
+    targetPort:  7058
+  - name:  tls-caa
+    port:  7059
+    targetPort:  7059
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabric4
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fabric
+  template:
+    metadata:
+      labels:
+        app: fabric
+        name: fabric
+    spec:
+      containers:
+      - name: fabric
+        image: 10.77.70.82:4433/hyperledger/fabric-peer:x86_64-0.6.0-preview
+        imagePullPolicy: Always
+        command:
+          - /opt/gopath/bin/peer
+        args:
+          - node
+          - start
+        env:
+          - name: CORE_PEER_ADDRESSAUTODETECT
+            value: "true"
+          - name: CORE_PEER_NETWORKID
+            value: "dev"
+          - name: CORE_LOGGING_LEVEL
+            value: "debug"
+          - name: CORE_PEER_VALIDATOR_CONSENSUS_PLUGIN
+            value: "pbft"
+          - name: CORE_PBFT_GENERAL_MODE
+            value: "batch"
+          - name: CORE_PBFT_GENERAL_N
+            value: "4"
+          - name: CORE_PBFT_GENERAL_BATCHSIZE
+            value: "2"
+          - name: CORE_PBFT_GENERAL_TIMEOUT_REQUEST
+            value: "2s"
+          - name: CORE_PEER_ID
+            value: "vp4"
+          - name: CORE_PEER_DISCOVERY_ROOTNODE
+            value: "10.43.200.101:7051"
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: fabric-data
+      volumes:
+        - name: fabric-data
+          hostPath:
+            path: /var/run/docker.sock
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  fabric4
+  labels:
+    name: fabric
+    app: fabric
+spec:
+  selector:
+    name: fabric
+  type:  ClusterIP
+  clusterIP: 10.43.200.104
+  ports:
+  - name:  rest
+    port:  7050
+    targetPort:  7050
+  - name:  grpc
+    port:  7051
+    targetPort:  7051
+  - name:  peer-cli
+    port:  7052
+    targetPort:  7052
+  - name:  peer-event
+    port:  7053
+    targetPort:  7053
+  - name: ecap
+    port:  7054
+    targetPort:  7054
+  - name:  ecaa
+    port:  7055
+    targetPort:  7055
+  - name:  tcap
+    port:  7056
+    targetPort:  7056
+  - name:  tcaa
+    port:  7057
+    targetPort:  7057
+  - name:  tls-cap
+    port:  7058
+    targetPort:  7058
+  - name:  tls-caa
+    port:  7059
+    targetPort:  7059

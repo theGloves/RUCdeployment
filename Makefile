@@ -6,9 +6,9 @@ install:
 
 quick:
 	make clean
-	./bin/kubectl create -n tendermint -f test/deployment-k8s.yaml
+	./bin/kubectl create -n fabric -f fabric.yaml
 
 clean:
-	./bin/kubectl delete -n tendermint services,deployments -l app=tendermint
+	./bin/kubectl delete -n fabric services,deployments -l app=fabric
 
 .PHONY: build install quick clean	
