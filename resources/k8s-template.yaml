@@ -27,6 +27,9 @@ spec:
           - start
           - node
           - --p2p.persistent_peers={peers}
+          - --max_block_size=10000
+          - --slot_timeout=10
+          - --threshold=2
         volumeMounts:
           - mountPath: /chain_bft/.chain_bft/config
             name: vol{id}

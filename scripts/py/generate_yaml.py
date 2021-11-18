@@ -8,10 +8,18 @@ template_filename = "resources/k8s-template.yaml"  # 读取模板文件
 filename = "test/deployment-k8s.yaml"  # 输出文件名
 
 
-def getPeers(peers, prev):
-    if prev < 0:
+def getPeers(peers, cur):
+    if cur < 0:
         return ""
-    return peers[prev]
+    l = cur - 3
+    r = cur
+    if l < 0:
+        l += len(peers)
+        r += len(peers)
+    tmp = []
+    for i in range(l, r, 1):
+        tmp.append(peers[i%len(peers)])
+    return ",".join(tmp)
 
 
 def genYaml(image, node_cnt, peers):
@@ -21,9 +29,9 @@ def genYaml(image, node_cnt, peers):
 
     with open(filename, "w") as output:
         for i in range(node_cnt):
-            peers_str = getPeers(peers, i - 1)
+            peers_str = getPeers(peers, i)
             parameters = {
-                "id": i+1,
+                "id": i + 1,
                 "node_name": "cbft{}".format(i + 1),
                 "image": image,
                 "peers": peers_str,
@@ -39,5 +47,5 @@ if __name__ == "__main__":
     argv = sys.argv[1:]
     image = argv[0]
     node_cnt = int(argv[1])
-    peers = argv[2].split(",")
+    peers = argv[2].split(",")[:-1]
     genYaml(image, node_cnt, peers)
