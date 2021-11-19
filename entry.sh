@@ -6,7 +6,7 @@ source env.sh
 # 清空rancher环境
 make clean
 
-bash scripts/sh/generate.sh 4 2
+bash scripts/sh/generate.sh 8 3
 
 # 部署
 make quick
