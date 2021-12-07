@@ -3,8 +3,6 @@ set -e
 
 source env.sh
 
-NODE_CNT=$1
-THRESHODL=$2
 OUTPUTDIR=$WORKDIR/test
 BINARY=./bin/chain_bft
 
@@ -14,7 +12,7 @@ rm -rf $OUTPUTDIR/*
 
 # TODO cache
 
-bash ./scripts/sh/gen_config.sh $NODE_CNT $THRESHODL $RANDOM
+bash ./scripts/sh/gen_config.sh
 
 # peers
 PEERS=""
@@ -26,7 +24,7 @@ for (( i = 1; i <= $NODE_CNT; i++ )); do
   PEERS=$PEERS"${NODEID}@10.43.10."$((${i}+99))":26656,"
 done
 
-python scripts/py/generate_yaml.py $IMAGE $NODE_CNT $PEERS
+python scripts/py/generate_yaml.py $IMAGE $NODE_CNT $TXS $SLOTTIMEOUT $THRESHOLD $PEERS 
 
 # deployment
 bash scripts/sh/transport.sh

@@ -27,9 +27,9 @@ spec:
           - start
           - node
           - --p2p.persistent_peers={peers}
-          - --max_block_size=40000
-          - --slot_timeout=60
-          - --threshold=3
+          - --max_block_size={tx_num}
+          - --slot_timeout={slot_timeout}
+          - --threshold={threshold}
         volumeMounts:
           - mountPath: /chain_bft/.chain_bft/config
             name: vol{id}
@@ -71,3 +71,6 @@ spec:
   - name:  p7
     port:  26657
     targetPort:  26657
+  - name:  profile
+    port:  8080
+    targetPort:  8080

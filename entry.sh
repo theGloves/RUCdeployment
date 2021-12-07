@@ -6,11 +6,13 @@ source env.sh
 # 清空rancher环境
 make clean
 
-bash scripts/sh/generate.sh 8 3
+bash scripts/sh/generate.sh
 
 # 部署
 make quick
 
+if [ $1 ];then
 #自动设置proxy
-sleep 5
-kubectl port-forward -n chainbft service/cbft1 26657:26657
+sleep $((3*$SLOTTIMEOUT))
+kubectl port-forward -n chainbft service/cbft2 26657:26657
+fi
