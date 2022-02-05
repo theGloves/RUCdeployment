@@ -1,8 +1,6 @@
 #! /usr/bin/env bash
 set -e
 
-source env.sh
-
 OUTPUTDIR=$WORKDIR/test
 BINARY=./bin/chain_bft
 
@@ -24,7 +22,7 @@ for (( i = 1; i <= $NODE_CNT; i++ )); do
   PEERS=$PEERS"${NODEID}@10.43.10."$((${i}+99))":26656,"
 done
 
-python scripts/py/generate_yaml.py $IMAGE $NODE_CNT $TXS $SLOTTIMEOUT $THRESHOLD $PEERS 
+python scripts/py/generate_yaml.py $PEERS 
 
 # deployment
 bash scripts/sh/transport.sh

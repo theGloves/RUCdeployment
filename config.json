@@ -1,5 +1,11 @@
 {
-    "dev": {
+    "cbft": {
+        "image": "10.77.70.82:4433/chain_bft:v2.0"
+    },
+    "release-old": {
         "image": "10.77.70.82:4433/chain_bft:v1.4"
+    },
+    "pbft": {
+        "image": "10.77.70.82:4433/chain_bft:v2.1"
     }
 }

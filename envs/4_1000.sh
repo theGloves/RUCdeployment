@@ -4,15 +4,12 @@ set -e
 export TAG="pbft"
 
 export F=1
-export PROPOSALTIMEOUT="300ms"
-export SYNCTIMEOUT="200ms"
-export SLOTTIMEOUT="200ms"
+export SLOTTIMEOUT="1005ms"
 export SLOTTIMEOUT1=4
 export TXS=1000
 export NODE_CNT=$(($F*3+1))
 export THRESHOLD=$(($F*2))
-export TIMEOUTTHRESHOLD=$(($F*2))
-# SEED=1000
+export # SEED=1000
 export SEED=$RANDOM
 export PROXYPORT=26657
 

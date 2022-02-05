@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-source env.sh
+# source env.sh
 
 OUTPUTDIR=$WORKDIR/test
 BINARY=./bin/chain_bft

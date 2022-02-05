@@ -1,5 +1,6 @@
 # -*-coding:utf-8 -*-
 import sys
+import os
 import random
 from collections import OrderedDict
 from json import loads
@@ -12,6 +13,7 @@ neighbors_num = 4
 
 
 def getPeers(peers, cur, neighbors_num):
+    # return ",".join(peers)
     if cur < 0:
         return ""
     l = cur - neighbors_num
@@ -43,7 +45,8 @@ def getPeers_gossip(peers, cur):
     return ",".join(result[1:])
 
 
-def genYaml(image, node_cnt, tx_num, slot_timeout, threshold, peers):
+def genYaml(peers):
+    node_cnt = int(os.getenv("NODE_CNT"))
     for peer in peers:
         availablePeers[peer] = neighbors_num
 
@@ -61,25 +64,24 @@ def genYaml(image, node_cnt, tx_num, slot_timeout, threshold, peers):
             parameters = {
                 "id": i + 1,
                 "node_name": "cbft{}".format(i + 1),
-                "image": image,
+                "image": os.getenv("IMAGE"),
                 "peers": peers_str,
                 "ip_addr": "10.43.10.{}".format(100 + i),
-                "tx_num": tx_num,
-                "slot_timeout": slot_timeout,
-                "threshold": threshold,
+                "tx_num": int(os.getenv("TXS")),
+                "slot_timeout": os.getenv("SLOTTIMEOUT"),
+                "proposal_timeout":os.getenv("PROPOSALTIMEOUT"),
+                "sync_timeout":os.getenv("SYNCTIMEOUT"),
+                "timeout_threshold":int(os.getenv("TIMEOUTTHRESHOLD")),
+                "threshold": int(os.getenv("THRESHOLD")),
             }
+            print(parameters)
 
             output.write(template.format(**parameters))
             output.write("\n")
 
 
 if __name__ == "__main__":
-    # python generate_yaml.py {image} {node_cnt} {[id@ip,]}
+    # python generate_yaml.py {[id@ip,]}
     argv = sys.argv[1:]
-    image = argv[0]
-    node_cnt = int(argv[1])
-    tx_num = int(argv[2])
-    slot_timeout = int(argv[3])
-    threshold = int(argv[4])
-    peers = argv[5].split(",")[:-1]
-    genYaml(image, node_cnt, tx_num, slot_timeout, threshold, peers)
+    peers = argv[0].split(",")[:-1]
+    genYaml(peers)
