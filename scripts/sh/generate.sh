@@ -22,6 +22,7 @@ for (( i = 1; i <= $NODE_CNT; i++ )); do
   PEERS=$PEERS"${NODEID}@10.43.10."$((${i}+99))":26656,"
 done
 
+echo $PEERS
 python scripts/py/generate_yaml.py $PEERS 
 
 # deployment

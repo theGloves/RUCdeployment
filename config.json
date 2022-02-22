@@ -1,11 +1,26 @@
 {
-    "cbft": {
-        "image": "10.77.70.82:4433/chain_bft:v2.0"
+    "CBFTNEW": {
+        "image": "10.77.70.82:4433/chain_bft:CBFT-v3.0",
+        "template": "resources/k8s-template.yaml"
     },
     "release-old": {
-        "image": "10.77.70.82:4433/chain_bft:v1.4"
+        "image": "10.77.70.82:4433/chain_bft:v1.4",
+        "template": "resources/k8s-template.yaml"
     },
     "pbft": {
-        "image": "10.77.70.82:4433/chain_bft:v2.1"
+        "image": "10.77.70.82:4433/chain_bft:v2.1",
+        "template": "resources/k8s-template-PBFT.yaml"
+    },
+    "PBFTRELEASE": {
+        "image": "10.77.70.82:4433/chain_bft:PBFT-v1.1",
+        "template": "resources/k8s-template-PBFT.yaml"
+    },
+    "PBFTVC":{
+        "image": "10.77.70.82:4433/chain_bft:PBFT-v1.2",
+        "template": "resources/k8s-template-PBFT-VC.yaml"
+    },
+    "PBFTNORMAL":{
+        "image": "10.77.70.82:4433/chain_bft:PBFT-v1.0",
+        "template": "resources/k8s-template-PBFT.yaml"
     }
 }

@@ -5,11 +5,15 @@ import random
 from collections import OrderedDict
 from json import loads
 
-template_filename = "resources/k8s-template.yaml"  # 读取模板文件
+# template_filename = "resources/k8s-template.yaml"  # 读取模板文件
+template_filename = os.getenv("TEMPLATE")  # 读取模板文件
 filename = "test/deployment-k8s.yaml"  # 输出文件名
 
 availablePeers = {}
-neighbors_num = 4
+neighbors_num = 8
+
+# byzantine_nodes = [3, 5, 8, 12, 15]
+byzantine_nodes = [ ]
 
 
 def getPeers(peers, cur, neighbors_num):
@@ -55,12 +59,14 @@ def genYaml(peers):
         template = f.read()
 
     neighbors_file = open("./test/neighbors.txt", "w")
-
     with open(filename, "w") as output:
         for i in range(node_cnt):
             peers_str = getPeers(peers, i, neighbors_num)
             neighbors_file.write("{}#{}".format(peers[i], peers_str))
             neighbors_file.write("\n")
+            strategy = "normal"
+            if i in byzantine_nodes:
+                strategy = "silence"
             parameters = {
                 "id": i + 1,
                 "node_name": "cbft{}".format(i + 1),
@@ -69,12 +75,13 @@ def genYaml(peers):
                 "ip_addr": "10.43.10.{}".format(100 + i),
                 "tx_num": int(os.getenv("TXS")),
                 "slot_timeout": os.getenv("SLOTTIMEOUT"),
-                "proposal_timeout":os.getenv("PROPOSALTIMEOUT"),
-                "sync_timeout":os.getenv("SYNCTIMEOUT"),
-                "timeout_threshold":int(os.getenv("TIMEOUTTHRESHOLD")),
+                "vc_interval": os.getenv("VCINTERVAL"),
+                "proposal_timeout": os.getenv("PROPOSALTIMEOUT"),
+                "sync_timeout": os.getenv("SYNCTIMEOUT"),
+                "timeout_threshold": int(os.getenv("TIMEOUTTHRESHOLD")),
                 "threshold": int(os.getenv("THRESHOLD")),
+                "byzantine_strategy": strategy,
             }
-            print(parameters)
 
             output.write(template.format(**parameters))
             output.write("\n")

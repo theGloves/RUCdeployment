@@ -28,13 +28,8 @@ spec:
           - node
           - --p2p.persistent_peers={peers}
           - --consensus.slot_timeout={slot_timeout}
-          - --consensus.proposal_timeout={proposal_timeout}
-          - --consensus.sync_timeout={sync_timeout}
-          - --consensus.timeout_threshold={timeout_threshold}
-          - --consensus.threshold={threshold}
           - --mempool.default_block_size={tx_num}
-          - --consensus.broadcast_off_flag
-          - --profile
+          - --consensus.byzantine_strategy={byzantine_strategy}
         volumeMounts:
           - mountPath: /chain_bft/.chainBFT/config
             name: vol{id}
