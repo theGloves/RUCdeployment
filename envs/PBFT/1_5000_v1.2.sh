@@ -7,7 +7,7 @@ export SLOTTIMEOUT1=4
 export TXS=5000
 export NODE_CNT=$(($F*3+1))
 export SEED=1000
-export VCINTERVAL="20s"
+export VCINTERVAL="5s"
 
 export PROPOSALTIMEOUT="300ms"
 export SYNCTIMEOUT="200ms"

@@ -1,13 +1,14 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: {node_name}
   labels:
     name: {node_name}
     app: chainBFT
 spec:
-  replicas: 1
+  # replicas: 1
+  manualSelector: true
   selector:
     matchLabels:
       app: chainBFT
@@ -40,6 +41,7 @@ spec:
             subPath: test/{node_name}/data
           - name: date-config
             mountPath: /etc/localtime
+      restartPolicy: Never
         # resources:
         #   requests:
         #     cpu: "1"

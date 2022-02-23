@@ -10,7 +10,7 @@ template_filename = os.getenv("TEMPLATE")  # 读取模板文件
 filename = "test/deployment-k8s.yaml"  # 输出文件名
 
 availablePeers = {}
-neighbors_num = 8
+neighbors_num = 16
 
 # byzantine_nodes = [3, 5, 8, 12, 15]
 byzantine_nodes = [ ]
