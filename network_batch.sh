@@ -1,27 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-source env.sh
-
-# 清空rancher环境
-
-SLOTTIMEOUT=5
-FS='5'
-TXS='4000 5000'
+FS="1 2 3 4 5 6 7 8"
 
 for F in $FS; do
-    for txs in $TXS; do
-        make clean
-        NODE=$(($F*3+1))
-        THRESHOLD=$(($F*2))
-        bash scripts/sh/generate.sh $NODE $THRESHOLD $txs $SLOTTIMEOUT
-        # 部署
-        make quick
+    bash entry.sh ./envs/CBFT/${F}.sh
 
-        #自动设置proxy
-        sleep $((($NODE+3)*$SLOTTIMEOUT))
+    # sleep initialSleepTime + slot * 20
+    sleep 60
 
-        bash scripts/sh/log_filter.sh "set proposal success" > log/network/ps_${NODE}_${txs}_${SLOTTIMEOUT}.txt
-        bash scripts/sh/log_filter.sh "gossip-debug" > log/network/gossip_${NODE}_${txs}_${SLOTTIMEOUT}.txt
-    done
+    bash scripts/sh/log_filter.sh "set proposal success" > log/gossip/proposal_${F}.txt
+    bash scripts/sh/log_filter.sh "added vote" > log/gossip/vote_${F}.txt
 done

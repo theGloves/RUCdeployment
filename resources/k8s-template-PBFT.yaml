@@ -34,12 +34,13 @@ spec:
         volumeMounts:
           - mountPath: /chain_bft/.chainBFT/config
             name: vol{id}
-            subPath: test/{node_name}/config          
+            subPath: cbft/{node_name}/config          
           - mountPath: /chain_bft/.chainBFT/data
             name: vol{id}
-            subPath: test/{node_name}/data
+            subPath: cbft/{node_name}/data
           - name: date-config
             mountPath: /etc/localtime
+      restartPolicy: Never
         # resources:
         #   requests:
         #     cpu: "1"
@@ -50,7 +51,7 @@ spec:
       volumes:
         - name: vol{id}
           persistentVolumeClaim:
-            claimName: cbft
+            claimName: cbft-thegloves
         - name: date-config
           hostPath:
             path: /etc/localtime

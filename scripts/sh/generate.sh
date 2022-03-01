@@ -19,7 +19,7 @@ for (( i = 1; i <= $NODE_CNT; i++ )); do
   volume="--home $OUTPUTDIR/cbft${i}"
   NODEID=`$BINARY show-node-id $volume`
   # NODEID=`docker run -v $volume $IMAGE show-node-id`
-  PEERS=$PEERS"${NODEID}@10.43.10."$((${i}+99))":26656,"
+  PEERS=$PEERS"${NODEID}@10.43.10."$((${i}+49))":26656,"
 done
 
 echo $PEERS

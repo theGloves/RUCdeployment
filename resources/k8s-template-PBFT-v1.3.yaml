@@ -12,6 +12,7 @@ spec:
   selector:
     matchLabels:
       app: chainBFT
+  backoffLimit: 0
   template:
     metadata:
       labels:
@@ -30,8 +31,9 @@ spec:
           - --p2p.persistent_peers={peers}
           - --consensus.slot_timeout={slot_timeout}
           - --mempool.default_block_size={tx_num}
-          - --consensus.view_change_interval={vc_interval}
           - --consensus.byzantine_strategy={byzantine_strategy}
+          - --consensus.view_change_interval={vc_interval}
+          - --consensus.byzantine_probability={byzantine_probability}
         volumeMounts:
           - mountPath: /chain_bft/.chainBFT/config
             name: vol{id}
@@ -41,14 +43,14 @@ spec:
             subPath: cbft/{node_name}/data
           - name: date-config
             mountPath: /etc/localtime
-      restartPolicy: Never
         # resources:
         #   requests:
-        #     cpu: "1"
-        #     memory: 2Gi
+        #     cpu: "2"
+        #     memory: 3Gi
         #   limits:
-        #    cpu: "1"
-        #    memory: 2Gi
+        #     cpu: "2"
+        #     memory: 3Gi
+      restartPolicy: Never
       volumes:
         - name: vol{id}
           persistentVolumeClaim:

@@ -34,17 +34,18 @@ spec:
           - --consensus.timeout_threshold={timeout_threshold}
           - --consensus.threshold={threshold}
           - --mempool.default_block_size={tx_num}
-          - --consensus.broadcast_off_flag
-          - --profile
+          # - --consensus.broadcast_off_flag
+          - --consensus.byzantine_strategy={byzantine_strategy}
         volumeMounts:
           - mountPath: /chain_bft/.chainBFT/config
             name: vol{id}
-            subPath: test/{node_name}/config          
+            subPath: cbft/{node_name}/config          
           - mountPath: /chain_bft/.chainBFT/data
             name: vol{id}
-            subPath: test/{node_name}/data
+            subPath: cbft/{node_name}/data
           - name: date-config
             mountPath: /etc/localtime
+      restartPolicy: Never
         # resources:
         #   requests:
         #     cpu: "1"
@@ -55,7 +56,7 @@ spec:
       volumes:
         - name: vol{id}
           persistentVolumeClaim:
-            claimName: cbft
+            claimName: cbft-thegloves
         - name: date-config
           hostPath:
             path: /etc/localtime

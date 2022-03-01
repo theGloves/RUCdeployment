@@ -10,10 +10,10 @@ template_filename = os.getenv("TEMPLATE")  # 读取模板文件
 filename = "test/deployment-k8s.yaml"  # 输出文件名
 
 availablePeers = {}
-neighbors_num = 16
+neighbors_num = 5
 
 # byzantine_nodes = [3, 5, 8, 12, 15]
-byzantine_nodes = [ ]
+byzantine_nodes = []
 
 
 def getPeers(peers, cur, neighbors_num):
@@ -72,7 +72,7 @@ def genYaml(peers):
                 "node_name": "cbft{}".format(i + 1),
                 "image": os.getenv("IMAGE"),
                 "peers": peers_str,
-                "ip_addr": "10.43.10.{}".format(100 + i),
+                "ip_addr": "10.43.10.{}".format(50 + i),
                 "tx_num": int(os.getenv("TXS")),
                 "slot_timeout": os.getenv("SLOTTIMEOUT"),
                 "vc_interval": os.getenv("VCINTERVAL"),
@@ -81,6 +81,7 @@ def genYaml(peers):
                 "timeout_threshold": int(os.getenv("TIMEOUTTHRESHOLD")),
                 "threshold": int(os.getenv("THRESHOLD")),
                 "byzantine_strategy": strategy,
+                "byzantine_probability": float(os.getenv("BYZANTINEPROBABILITY")),
             }
 
             output.write(template.format(**parameters))

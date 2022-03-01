@@ -22,5 +22,14 @@
     "PBFTNORMAL":{
         "image": "10.77.70.82:4433/chain_bft:PBFT-v1.0",
         "template": "resources/k8s-template-PBFT.yaml"
+    },
+    "PBFTSIM":{
+        "image": "10.77.70.82:4433/chain_bft:PBFT-v1.3",
+        "template": "resources/k8s-template-PBFT-v1.3.yaml"
+    },
+    "CBFT":{
+
+        "image": "10.77.70.82:4433/chain_bft:CBFT-v3.1",
+        "template": "resources/k8s-template.yaml"
     }
 }

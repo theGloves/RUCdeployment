@@ -15,5 +15,5 @@ if [ $2 ];then
 #自动设置proxy
 sleep $((3*$SLOTTIMEOUT1))
 export PROXYPORT=26657
-kubectl port-forward -n chainbft service/cbft2 ${PROXYPORT}:${PROXYPORT}
+kubectl port-forward -n cbft service/cbft2 ${PROXYPORT}:${PROXYPORT}
 fi
