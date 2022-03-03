@@ -28,8 +28,11 @@
         "template": "resources/k8s-template-PBFT-v1.3.yaml"
     },
     "CBFT":{
-
         "image": "10.77.70.82:4433/chain_bft:CBFT-v3.1",
         "template": "resources/k8s-template.yaml"
+    },
+    "OBFT":{
+        "image": "10.77.70.82:4433/chain_bft:OBFT-v1.1",
+        "template": "resources/k8s-template-OBFT.yaml"
     }
 }

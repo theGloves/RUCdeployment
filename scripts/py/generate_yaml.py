@@ -13,13 +13,15 @@ availablePeers = {}
 neighbors_num = 5
 
 # byzantine_nodes = [3, 5, 8, 12, 15]
-byzantine_nodes = []
+# 5 7 9  11 14
+byzantine_nodes = [ 14]
 
 
 def getPeers(peers, cur, neighbors_num):
     # return ",".join(peers)
     if cur < 0:
         return ""
+    
     l = cur - neighbors_num
     r = cur
     if cur % 2 == 1:
@@ -66,7 +68,7 @@ def genYaml(peers):
             neighbors_file.write("\n")
             strategy = "normal"
             if i in byzantine_nodes:
-                strategy = "silence"
+                strategy = "fork"
             parameters = {
                 "id": i + 1,
                 "node_name": "cbft{}".format(i + 1),
