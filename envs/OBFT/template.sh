@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-export F=6
+export F=1
 export SLOTTIMEOUT="1200ms" #2.5s
 export SLOTTIMEOUT1=4
 export TXS=5000

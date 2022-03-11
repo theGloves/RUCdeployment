@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
-export F=4
-export PROPOSALTIMEOUT="550ms" # 5s
-export SYNCTIMEOUT="10ms" #2.5s
-export SLOTTIMEOUT="10ms" #2.5s
+export F=5
+export PROPOSALTIMEOUT="700ms" # 5s
+export SYNCTIMEOUT="15ms" #2.5s
+export SLOTTIMEOUT="15ms" #2.5s
 export SLOTTIMEOUT1=4
 export TXS=5000
 export NODE_CNT=$(($F*3+1))

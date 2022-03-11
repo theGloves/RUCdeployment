@@ -35,7 +35,7 @@ spec:
           - --consensus.timeout_threshold={timeout_threshold}
           - --consensus.threshold={threshold}
           - --mempool.default_block_size={tx_num}
-          # - --consensus.broadcast_off_flag
+          - --consensus.broadcast_off_flag
           # - --no_log
           - --consensus.byzantine_strategy={byzantine_strategy}
         volumeMounts:

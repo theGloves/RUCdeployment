@@ -142,3 +142,4 @@ bin/*
 test/*
 .vscode/*
 log/*
+result/*

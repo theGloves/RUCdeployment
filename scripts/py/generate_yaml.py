@@ -5,6 +5,8 @@ import random
 from collections import OrderedDict
 from json import loads
 
+from scipy import rand
+
 # template_filename = "resources/k8s-template.yaml"  # 读取模板文件
 template_filename = os.getenv("TEMPLATE")  # 读取模板文件
 filename = "test/deployment-k8s.yaml"  # 输出文件名
@@ -14,7 +16,7 @@ neighbors_num = 5
 
 # byzantine_nodes = [3, 5, 8, 12, 15]
 # 5 7 9  11 14
-byzantine_nodes = [ 14]
+byzantine_nodes = []
 
 
 def getPeers(peers, cur, neighbors_num):
@@ -51,6 +53,21 @@ def getPeers_gossip(peers, cur):
     return ",".join(result[1:])
 
 
+def random_getPeers_gossip(peers, cur):
+    selfP = peers[cur]
+    ite = neighbors_num
+    result = []
+    while ite > 0:
+        idx = random.randint(0, len(peers) - 1)  # [0, len(peers) )
+        p = peers[idx]
+        if p in result or availablePeers[p] == 0:
+            continue
+        availablePeers[p] -= 1
+        result.append(p)
+
+    return ",".join(result)
+
+
 def genYaml(peers):
     node_cnt = int(os.getenv("NODE_CNT"))
     for peer in peers:
@@ -64,6 +81,7 @@ def genYaml(peers):
     with open(filename, "w") as output:
         for i in range(node_cnt):
             peers_str = getPeers(peers, i, neighbors_num)
+            # peers_str = random_getPeers_gossip(peers, i)
             neighbors_file.write("{}#{}".format(peers[i], peers_str))
             neighbors_file.write("\n")
             strategy = "normal"
@@ -92,6 +110,7 @@ def genYaml(peers):
 
 if __name__ == "__main__":
     # python generate_yaml.py {[id@ip,]}
+    random.seed(1000)
     argv = sys.argv[1:]
     peers = argv[0].split(",")[:-1]
     genYaml(peers)

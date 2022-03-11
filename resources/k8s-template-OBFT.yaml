@@ -29,7 +29,7 @@ spec:
           - start
           - node
           - --p2p.persistent_peers={peers}
-          - --consensus.slot_timeout={slot_timeout}
+          - --consensus.slot_timeout={proposal_timeout}
         volumeMounts:
           - mountPath: /chain_bft/.chainBFT/config
             name: vol{id}

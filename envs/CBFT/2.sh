@@ -2,9 +2,9 @@
 set -e
 
 export F=2
-export PROPOSALTIMEOUT="1500ms" # 5s
-export SYNCTIMEOUT="20ms" #2.5s
-export SLOTTIMEOUT="20ms" #2.5s
+export PROPOSALTIMEOUT="400ms" # 5s
+export SYNCTIMEOUT="10ms" #2.5s
+export SLOTTIMEOUT="10ms" #2.5s
 export SLOTTIMEOUT1=4
 export TXS=5000
 export NODE_CNT=$(($F*3+1))

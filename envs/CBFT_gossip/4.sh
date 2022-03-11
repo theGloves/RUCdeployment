@@ -2,7 +2,7 @@
 set -e
 
 export F=4
-export PROPOSALTIMEOUT="550ms" # 5s
+export PROPOSALTIMEOUT="1000ms" # 5s
 export SYNCTIMEOUT="10ms" #2.5s
 export SLOTTIMEOUT="10ms" #2.5s
 export SLOTTIMEOUT1=4

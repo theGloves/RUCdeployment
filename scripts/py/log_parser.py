@@ -24,6 +24,15 @@ def parser_gossip_time(txt):
         return 0
     return t
 
+def parser_slot_diff(txt):
+    pattern = re.compile("slotdiff=([-]*\d+)")
+    res = pattern.search(txt)
+    if res is None:
+        return None
+    t = int(res.group(1))
+    if t <= 0:
+        return abs(t)
+    return t
 
 if __name__ == "__main__":
     input = sys.argv[1]
@@ -35,13 +44,13 @@ if __name__ == "__main__":
         
         while line:
             t = parser_gossip_time(line)
-            r = parser_gossip_round(line)
+            # r = parser_gossip_round(line)
             if t is not None and t>0:
                 times.append(t)
-            if r is not None:
-                rounds.append(r)
+            # if r is not None:
+            #     rounds.append(r)
             line = f.readline()
     
-    # print("max,tp75,tp25,avg,mid")
-    print("{},{},{},{},{}".format(np.percentile(times,99),np.percentile(times,75),np.percentile(times,25),np.mean(times),np.median(times)))
+    # print("max,tp75,mid,tp25,avg")
+    print("{},{},{},{},{}".format(np.percentile(times,100),np.percentile(times,75),np.median(times),np.percentile(times,25),np.mean(times)))
     # print("{},{},{},{},{}".format(np.percentile(rounds,99),np.percentile(rounds,75),np.percentile(rounds,25),np.mean(rounds),np.median(rounds)))

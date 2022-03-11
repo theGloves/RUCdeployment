@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-export F=4
-export PROPOSALTIMEOUT="550ms" # 5s
+export F=1
+export PROPOSALTIMEOUT="1000ms" # 5s
 export SYNCTIMEOUT="10ms" #2.5s
 export SLOTTIMEOUT="10ms" #2.5s
 export SLOTTIMEOUT1=4
@@ -13,6 +13,7 @@ export TIMEOUTTHRESHOLD=$(($F*2))
 export SEED=1000
 
 export BYZANTINEPROBABILITY="0.0"
+
 
 export TAG="CBFT"
 export IMAGE=$(echo $(cat config.json | jq ".${TAG}.image")|sed 's/\"//g')
